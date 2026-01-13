@@ -1,14 +1,10 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
 
-const API_KEY = process.env.API_KEY || '';
-
 export const extractTravelInfo = async (text: string): Promise<string[]> => {
-  if (!API_KEY) {
-    throw new Error("Chave de API não configurada.");
-  }
-
-  const ai = new GoogleGenAI({ apiKey: API_KEY });
+  // Use a chave diretamente na inicialização conforme as diretrizes.
+  // Assume-se que process.env.API_KEY está configurado no ambiente de execução (ex: Vercel).
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   const systemInstruction = `
     Você é um assistente especializado em extração de dados administrativos de viagens e diárias.
@@ -64,8 +60,12 @@ export const extractTravelInfo = async (text: string): Promise<string[]> => {
 
     const result = JSON.parse(response.text);
     return result.extracted_lines || [];
-  } catch (error) {
+  } catch (error: any) {
     console.error("Erro na extração:", error);
-    throw new Error("Falha ao processar o texto. Verifique se o conteúdo é válido.");
+    // Caso o erro seja especificamente sobre a chave na resposta da API
+    if (error.message?.includes("API key")) {
+        throw new Error("Erro de Autenticação: A Chave de API configurada no ambiente é inválida ou expirou.");
+    }
+    throw new Error("Falha ao processar o texto. Verifique sua conexão e se o conteúdo é válido.");
   }
 };
