@@ -56,7 +56,7 @@ const App: React.FC = () => {
             Extrator de Diárias Inteligente
           </h1>
           <p className="mt-2 text-indigo-100 opacity-90 text-sm md:text-base">
-            Organização automática: Cidade primeiro, seguido de datas, horários e motivos limpos.
+            Organização automática: Data primeiro, seguido de cidade, horários e motivos limpos.
           </p>
         </header>
 
@@ -164,7 +164,7 @@ const App: React.FC = () => {
               <svg className="w-16 h-16 mb-4 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
-              <p>As informações formatadas (Cidade primeiro) aparecerão aqui</p>
+              <p>As informações formatadas (Data primeiro) aparecerão aqui</p>
             </div>
           )}
 
@@ -173,7 +173,7 @@ const App: React.FC = () => {
         {/* Footer info */}
         <footer className="bg-slate-50 border-t border-slate-200 p-4 text-center">
           <p className="text-xs text-slate-500">
-            Formato: Cidade primeiro. Sigla inicial e parênteses removidos. Tratamento automático de datas diferentes.
+            Formato: Data primeiro. Sigla inicial e parênteses removidos. Tratamento automático de datas diferentes.
           </p>
         </footer>
       </div>
