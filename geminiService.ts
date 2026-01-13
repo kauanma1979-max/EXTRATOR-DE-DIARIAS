@@ -2,9 +2,13 @@
 import { GoogleGenAI, Type } from "@google/genai";
 
 export const extractTravelInfo = async (text: string): Promise<string[]> => {
-  // Use a chave diretamente na inicialização conforme as diretrizes.
-  // Assume-se que process.env.API_KEY está configurado no ambiente de execução (ex: Vercel).
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const apiKey = process.env.API_KEY;
+
+  if (!apiKey || apiKey === "") {
+    throw new Error("Erro de Configuração: A chave de API não foi encontrada no ambiente de execução. Certifique-se de adicioná-la às variáveis de ambiente (Environment Variables) do seu projeto na Vercel com o nome 'API_KEY'.");
+  }
+
+  const ai = new GoogleGenAI({ apiKey });
   
   const systemInstruction = `
     Você é um assistente especializado em extração de dados administrativos de viagens e diárias.
@@ -63,8 +67,8 @@ export const extractTravelInfo = async (text: string): Promise<string[]> => {
   } catch (error: any) {
     console.error("Erro na extração:", error);
     if (error.message?.includes("API key")) {
-        throw new Error("Erro de Autenticação: A Chave de API configurada no ambiente é inválida ou expirou.");
+        throw new Error("A chave de API configurada é inválida ou não tem permissão para usar este modelo.");
     }
-    throw new Error("Falha ao processar o texto. Verifique sua conexão e se o conteúdo é válido.");
+    throw new Error(error.message || "Falha ao processar o texto. Verifique sua conexão e se o conteúdo é válido.");
   }
 };

@@ -5,11 +5,12 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   define: {
-    // Vite substitui process.env.API_KEY pelo valor real durante o build.
-    // Certifique-se de que a variável API_KEY está definida nas configurações da Vercel.
-    'process.env.API_KEY': JSON.stringify(process.env.API_KEY)
+    // Garante que o código 'process.env.API_KEY' seja substituído pelo valor da variável de ambiente no momento do build.
+    // Na Vercel, você deve configurar uma Environment Variable com o nome exato: API_KEY
+    'process.env.API_KEY': JSON.stringify(process.env.API_KEY || '')
   },
   build: {
-    target: 'esnext'
+    target: 'esnext',
+    outDir: 'dist',
   }
 });
